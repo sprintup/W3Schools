@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <!-- https://www.w3schools.com/html/html5_canvas.asp -->
+    <canvas id="myCanvas" width="200" height="100" style="border: 1px solid #000;"></canvas>
+    <canvas id="myCanvas2" width="200" height="100" style="border: 1px solid #000;"></canvas>
+    <canvas id="myCanvas3" width="200" height="100" style="border: 1px solid #000;"></canvas>
+    <canvas id="myCanvas4" width="250" height="300" style="border: 1px solid #000;"></canvas>
+    <button onclick="display()">Try it</button>
+    <img id="scream" src="img_the_scream.jpg" alt="The Scream" width="220" height="277">
+
+    <script type="text/javascript">
+      // get canvas element
+      var c = document.getElementById("myCanvas");
+      console.log(c);
+
+      //get 2d context out of element; 
+      var ctx = c.getContext("2d"); // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
+      console.log(ctx);
+
+      var c2 = document.getElementById("myCanvas2");
+      var ctx2 = c2.getContext("2d");
+
+      var c3 = document.getElementById("myCanvas3");
+      var ctx3 = c3.getContext("2d");
+      
+      var c4 = document.getElementById("myCanvas4");
+      var ctx4 = c4.getContext("2d");
+      
+      // diagonal line
+      ctx.moveTo(0,0); // begins a new sub-path at the point specified by the given (x, y) coordinates
+      ctx.lineTo(200,100); // adds a straight line to the current sub-path by connecting the sub-path's last point to the specified (x,y) coordinates. Like other methods that modify thee current path, this method does not directly render anything. To draw the path onto a canvas, you can use the fill() or stroke() methods. 
+      ctx.stroke(); // strokes (outlines) the current or given path with the current stroke style. Strokes are aligned to the center of a path; in other words, half of the stroke is drawn on the inner side, and half on the outer side. The stroke is drawn using the non-zero winding rule, which means that path intersections will still get filled. 
+
+      // circle
+      ctx.beginPath(); // starts a new path by emptying the lilst of sub-paths. Call this method when you want to create a new path. 
+      ctx.arc(95, 50, 40, 0, 2 * Math.PI); // adds a circular arc to the current sub-path. The arch() methods creates a circular arch centered at (x,y) with the radius of radius. The path starts at startAngle, ends at endAngle, and travels in the direction given by anticlockwise (defaulting to clockwise). ctx.arch(x, y, radius, startAngle, endAngle [, anticlockwise]);
+      ctx.stroke(); //ibid
+      
+      //Draw a Text (Hello World)
+      ctx.font = "30px Arial"; // specifies the current text style to use when drawing text. This string uses the same syntax as the CSS font specifier. 
+      ctx.fillText("Hello World", 10, 50); // draws a text string at the specified coordinates, filling the string's characters with the current fillStyle. An optional parameter allows specifying a maximum width for the rendered text, which the user agent will achieve by condensing the text or by using a lower font size. 
+
+      // Stroke Text
+      ctx.strokeText("Hello", 10, 50);
+
+      
+      // Create gradient
+      var grd = ctx2.createLinearGradient(0,0,200,0); // creates a gradient along the line connecting two given coordinates. This method returns a linear 'CanvasGradient.' To be applied to a shape, the gradient must first be assigned to the 'fillStyle' or 'strokeStyle' properties. (x0, y0, x1, y1); x0: x-axis coodinate of star point; y0: y-axis coordinate of the start point; x1: x-axis coordinate of the end point; y1: y-axis coordinate of the end point.
+        // https://developer.mozilla.org/en-US/docs/Web/API/CanvasGradient
+        grd.addColorStop(0,"red"); // adds a new color stop, defined by an 'offset' and a 'color,' to a given canvas gradient. 
+        // Offset - A number between 0 and 1, inclusive, representing the position of the color stop. 0 represents the start of the gradient and 1 represents the end; an 'INDEX_SIZE_ERR' is raised if the number is outside that range. 
+        // Color - A 'CSS <color>' value representing the color of the stop. A SYNTAX_ERR is raised if the value cannot be parsed as a CSS <color> value.
+        grd.addColorStop(1,"white");
+      ctx2.fillStyle = grd;
+      ctx2.fillRect(10,10,150,80); // draws a rectangle that is filled according to the current 'fillStyle.' Draws directly to the canvas without modifying the current path, so any subsequent 'fill()' or 'stroke()' calls will have no effect on it. (x,y,width,height)
+
+      // Draw circular gradient
+      var grd2 = ctx3.createRadialGradient(75,50,5,90,60,100); // creates a radial gradient using the size and coordiantes of two circles. This method returns a 'CanvasGradient.' Specified by six parameters, three defining the gradient's start circle, and three defining the end circle. (x-axis of start circle, y-axis of start circle, radius of start circle, ...)
+      grd2.addColorStop(0, "red");
+      grd2.addColorStop(1,"white");
+      ctx3.fillStyle = grd2;
+      ctx3.fillRect(10,10,150,80);
+      
+      // Draw Image
+      function  display() {
+        var img = document.getElementById("scream");
+        ctx4.drawImage(img,10,10);
+      }
+    </script>
+  </body>
+</html>
